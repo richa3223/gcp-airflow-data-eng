@@ -1,0 +1,105 @@
+[
+    {
+        "name": "sku",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Unique ID of individual products"
+    },   
+    {
+        "name": "min",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Master product ID number ???"
+    },  
+    {
+        "name": "pin",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Product ID number ???"
+    },        
+    {
+        "name": "long_desc",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product long description"
+    },          
+    {
+        "name": "room",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product room name"
+    },  
+    {
+        "name": "room_two",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Product room two name"
+    },                                                           
+    {
+        "name": "trading_category",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product trading category"
+    }, 
+    {
+        "name": "pack_weight",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Pack weight in kilos"
+    },      
+    {
+        "name": "case_size",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Number of product items per case"
+    },     
+    {
+        "name": "case_weight",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Case weight in kilos"
+    },     
+    {
+        "name": "prices",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "description": "Array of pricing history structs",
+        "fields": [
+            {
+                "name": "created_ts",
+                "type": "TIMESTAMP",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "correlation_id",
+                "type": "STRING",
+                "mode": "REQUIRED",
+                "description": "Common ID for all records created by a specific pipeline run"
+            },   
+            {
+                "name": "record_status",
+                "type": "STRING",
+                "mode": "REQUIRED",
+                "description": "Indicates active, valid or error status of a record"
+            },             
+            {
+                "name": "pricing_date",
+                "type": "DATE",
+                "mode": "REQUIRED",
+                "description": "Effective date of price data"
+            },
+            {
+                "name": "unit_price",
+                "type": "FLOAT64",
+                "mode": "REQUIRED",
+                "description": "Total cost per item"
+            },         
+            {
+                "name": "case_price",
+                "type": "FLOAT64",
+                "mode": "REQUIRED",
+                "description": "Total cost per case"
+            }            
+        ]
+    }
+]

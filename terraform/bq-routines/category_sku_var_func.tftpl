@@ -1,0 +1,46 @@
+WITH cat_sku AS(
+select
+  frd.depot_category,
+  frd.sku,
+  SUM(frd.pkrd_quantity) AS sum_pkrd_qty,
+  SUM(frd.pkrd_value_tp) AS sum_pkrd_value,
+  SUM(frd.nfsi_quantity) AS sum_nfsi_qty,
+  SUM(frd.nfsi_value) AS sum_nfsi_value,
+  SUM(frd.quantity_variance) AS sum_qty_variance,
+  SUM(frd.value_variance_tp) AS sum_val_variance
+from `${proj}.mm_fin_reporting.fin_rec_data_for_dates`(start_date, end_date) frd
+WHERE frd.depot_category = category
+GROUP BY
+  frd.depot_category,
+  frd.sku
+),
+cat_sku_git AS (
+  SELECT
+    cs.depot_category,
+    cs.sku,
+    cs.sum_pkrd_qty,
+    cs.sum_pkrd_value,
+    cs.sum_nfsi_qty,
+    cs.sum_nfsi_value,
+    cs.sum_qty_variance,
+    cs.sum_val_variance,
+  IF(
+    ((cs.sum_pkrd_qty = 0 AND cs.sum_pkrd_value = 0) AND (cs.sum_nfsi_qty != 0 AND cs.sum_nfsi_value != 0))
+    OR
+    ((cs.sum_pkrd_qty != 0 AND cs.sum_pkrd_value != 0) AND (cs.sum_nfsi_qty = 0 AND cs.sum_nfsi_value = 0)), 1, 0) AS is_git
+FROM cat_sku AS cs
+)
+SELECT
+  csg.depot_category,
+  csg.sku,
+  csg.sum_pkrd_qty,
+  csg.sum_pkrd_value,
+  csg.sum_nfsi_qty,
+  csg.sum_nfsi_value,
+  csg.sum_qty_variance,
+  csg.sum_val_variance,
+  IF(is_git = 1, csg.sum_pkrd_qty + csg.sum_nfsi_qty, 0) AS sum_git_qty,
+  IF(is_git = 1, csg.sum_pkrd_value + csg.sum_nfsi_value, 0) AS sum_git_value
+FROM cat_sku_git AS csg
+ORDER BY
+  csg.sku ASC

@@ -1,0 +1,47 @@
+WITH depot_var AS (
+SELECT
+  depot_name,
+  SUM(val_var) AS variance
+FROM `${proj}.mm_fin_reporting.depot_date_var`(start_date, end_date)
+GROUP BY depot_name
+)
+SELECT
+  depot_name,
+  variance,
+  CASE
+    WHEN variance = 0 THEN 'Match'
+    WHEN variance BETWEEN -100 AND 100 THEN '<100'
+    WHEN variance BETWEEN -1000 AND 1000 THEN '<1k'
+    WHEN variance BETWEEN -5000 AND 5000 THEN '<5k'
+    WHEN variance BETWEEN -10000 AND 10000 THEN '<10k'
+    WHEN variance BETWEEN -15000 AND 15000 THEN '<15k'
+    WHEN variance BETWEEN -20000 AND 20000 THEN '<20k'
+    WHEN variance BETWEEN -50000 AND 50000 THEN '<50k'
+    WHEN variance BETWEEN -100000 AND 100000 THEN '<100k'
+    WHEN variance BETWEEN -250000 AND 250000 THEN '<250k'
+    WHEN variance BETWEEN -500000 AND 500000 THEN '<500k'
+    WHEN variance BETWEEN -750000 AND 750000 THEN '<750k'
+    WHEN variance BETWEEN -1000000 AND 1000000 THEN '<1m'
+    ELSE '>1m' 
+  END AS tier,
+  CASE
+    WHEN variance = 0 THEN 1
+    WHEN variance BETWEEN -100 AND 100 THEN 2
+    WHEN variance BETWEEN -1000 AND 1000 THEN 3
+    WHEN variance BETWEEN -5000 AND 5000 THEN 4
+    WHEN variance BETWEEN -10000 AND 10000 THEN 5
+    WHEN variance BETWEEN -15000 AND 15000 THEN 6
+    WHEN variance BETWEEN -20000 AND 20000 THEN 7
+    WHEN variance BETWEEN -50000 AND 50000 THEN 8
+    WHEN variance BETWEEN -100000 AND 100000 THEN 9
+    WHEN variance BETWEEN -250000 AND 250000 THEN 10
+    WHEN variance BETWEEN -500000 AND 500000 THEN 11
+    WHEN variance BETWEEN -750000 AND 750000 THEN 12
+    WHEN variance BETWEEN -1000000 AND 1000000 THEN 13
+    ELSE 14 
+  END AS tier_id,
+  ABS(variance) AS abs_variance
+FROM depot_var
+ORDER BY 
+  tier_id ASC,
+  abs_variance ASC

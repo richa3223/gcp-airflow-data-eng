@@ -1,0 +1,104 @@
+[
+    {
+        "name": "created_ts",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "defaultValueExpression": "CURRENT_TIMESTAMP"
+    },
+    {
+        "name": "correlation_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Common ID for all records created by a specific pipeline run"
+    },   
+    {
+        "name": "record_status",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates active, valid or error status of a record"
+    },     
+    {
+        "name": "effective_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "Effective date of summary data"
+    },       
+    {
+        "name": "report_type",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Name of summary report type e.g. SUMMARY"
+    },   
+    {
+        "name": "category",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates data category e.g. Fresh, Frozen, Non-NFSI"
+    },   
+    {
+        "name": "pkrd_quantity_sum",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Sum of quantity of product dispatched"
+    },      
+    {
+        "name": "pkrd_value_tp_sum",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Sum of transfer pricing generated value of product dispatched"
+    },     
+    {
+        "name": "nfsi_quantity_sum",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Sum of quantity of product received"
+    }, 
+    {
+        "name": "nfsi_value_sum",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Sum of value of product received"
+    },  
+    {
+        "name": "quantity_variance_sum",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Sum of variance between quantity dispatched and received"
+    },                        
+    {
+        "name": "value_variance_sum",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Sum of variance between transfer pricing value dispatched and received"
+    }, 
+    {
+        "name": "git_quantity_sum",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Sum of goods in transit quantity"
+    },                        
+    {
+        "name": "git_value_sum",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Sum of goods in transit value"
+    },
+    {
+        "name": "pct_of_sales",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Percentage of sales represented by variance"
+    },
+    {
+        "name": "ptd_ex_git",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Profits to date excluding goods in transit"
+    },
+    {
+        "name": "pct_of_sales_ex_git",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Percentage of sales represented by variance excluding goods in transit"
+    }
+]

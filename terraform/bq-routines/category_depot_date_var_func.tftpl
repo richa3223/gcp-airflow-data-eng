@@ -1,0 +1,55 @@
+WITH cat_depot_date AS(
+select
+  frd.depot_category,
+  frd.depot_id,
+  frd.depot_name,
+  frd.record_date,
+  SUM(frd.pkrd_quantity) AS sum_pkrd_qty,
+  SUM(frd.pkrd_value_tp) AS sum_pkrd_value,
+  SUM(frd.nfsi_quantity) AS sum_nfsi_qty,
+  SUM(frd.nfsi_value) AS sum_nfsi_value,
+  SUM(frd.quantity_variance) AS sum_qty_variance,
+  SUM(frd.value_variance_tp) AS sum_val_variance
+from `${proj}.mm_fin_reporting.fin_rec_data_for_dates`(start_date, end_date) frd
+WHERE frd.depot_category = category
+GROUP BY
+  frd.depot_category,
+  frd.depot_id,
+  frd.depot_name,
+  frd.record_date
+),
+cat_depot_date_git AS (
+  SELECT
+    cdd.depot_category,
+    cdd.depot_id,
+    cdd.depot_name,
+    cdd.record_date,
+    cdd.sum_pkrd_qty,
+    cdd.sum_pkrd_value,
+    cdd.sum_nfsi_qty,
+    cdd.sum_nfsi_value,
+    cdd.sum_qty_variance,
+    cdd.sum_val_variance,
+  IF(
+    ((cdd.sum_pkrd_qty = 0 AND cdd.sum_pkrd_value = 0) AND (cdd.sum_nfsi_qty != 0 AND cdd.sum_nfsi_value != 0))
+    OR
+    ((cdd.sum_pkrd_qty != 0 AND cdd.sum_pkrd_value != 0) AND (cdd.sum_nfsi_qty = 0 AND cdd.sum_nfsi_value = 0)), 1, 0) AS is_git
+FROM cat_depot_date AS cdd
+)
+SELECT
+  cddg.depot_category,
+  cddg.depot_id,
+  cddg.depot_name,
+  cddg.record_date,
+  cddg.sum_pkrd_qty,
+  cddg.sum_pkrd_value,
+  cddg.sum_nfsi_qty,
+  cddg.sum_nfsi_value,
+  cddg.sum_qty_variance,
+  cddg.sum_val_variance,
+  IF(cddg.is_git = 1, cddg.sum_pkrd_qty + cddg.sum_nfsi_qty, 0) AS sum_git_qty,
+  IF(cddg.is_git = 1, cddg.sum_pkrd_value + cddg.sum_nfsi_value, 0) AS sum_git_value
+FROM cat_depot_date_git AS cddg
+ORDER BY
+  cddg.depot_name,
+  cddg.record_date ASC

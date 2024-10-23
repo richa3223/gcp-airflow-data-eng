@@ -1,0 +1,46 @@
+WITH fresh_mo AS(
+select
+  frd.depot_category,
+  frd.moveorder_short,
+  SUM(frd.pkrd_quantity) AS sum_pkrd_qty,
+  SUM(frd.pkrd_value_tp) AS sum_pkrd_value,
+  SUM(frd.nfsi_quantity) AS sum_nfsi_qty,
+  SUM(frd.nfsi_value) AS sum_nfsi_value,
+  SUM(frd.quantity_variance) AS sum_qty_variance,
+  SUM(frd.value_variance_tp) AS sum_val_variance
+from `${proj}.mm_fin_reporting.fin_rec_data_for_dates`(start_date, end_date) frd
+WHERE frd.depot_category = category
+GROUP BY
+  frd.depot_category,
+  frd.moveorder_short
+),
+fresh_mo_git AS (
+  SELECT
+    fm.depot_category,
+    fm.moveorder_short,
+    fm.sum_pkrd_qty,
+    fm.sum_pkrd_value,
+    fm.sum_nfsi_qty,
+    fm.sum_nfsi_value,
+    fm.sum_qty_variance,
+    fm.sum_val_variance,
+  IF(
+    ((fm.sum_pkrd_qty = 0 AND fm.sum_pkrd_value = 0) AND (fm.sum_nfsi_qty != 0 AND fm.sum_nfsi_value != 0))
+    OR
+    ((fm.sum_pkrd_qty != 0 AND fm.sum_pkrd_value != 0) AND (fm.sum_nfsi_qty = 0 AND fm.sum_nfsi_value = 0)), 1, 0) AS is_git
+FROM fresh_mo AS fm
+)
+SELECT
+  fmg.depot_category,
+  fmg.moveorder_short,
+  fmg.sum_pkrd_qty,
+  fmg.sum_pkrd_value,
+  fmg.sum_nfsi_qty,
+  fmg.sum_nfsi_value,
+  fmg.sum_qty_variance,
+  fmg.sum_val_variance,
+  IF(is_git = 1, fmg.sum_pkrd_qty + fmg.sum_nfsi_qty, 0) AS sum_git_qty,
+  IF(is_git = 1, fmg.sum_pkrd_value + fmg.sum_nfsi_value, 0) AS sum_git_value
+FROM fresh_mo_git AS fmg
+ORDER BY
+  fmg.moveorder_short

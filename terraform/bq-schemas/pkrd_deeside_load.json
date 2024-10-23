@@ -1,0 +1,147 @@
+[
+    {
+        "name": "SORDNO_ITM1",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },
+    {
+        "name": "SORDNO_ITM",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "CUSTREQDTE_SOR",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },    
+    {
+        "name": "SOCLDATE",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },     
+    {
+        "name": "SORDNO_ITM4",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },   
+    {
+        "name": "Textbox274",
+        "type": "INT64",
+        "mode": "NULLABLE"     
+    },    
+    {
+        "name": "Textbox277",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    }, 
+    {
+        "name": "Textbox268",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },      
+    {
+        "name": "Textbox271",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    }, 
+    {
+        "name": "Textbox280",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "PARTNO",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    }, 
+    {
+        "name": "Textbox265",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "SORDQTY",
+        "type": "INT64",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "QTY_IN_KG",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "SO_DESPATCHED_QUANTITY",
+        "type": "INT64",
+        "mode": "NULLABLE"     
+    },   
+    {
+        "name": "DESPATCHED_QTY_IN_KG",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "SELLPRICE",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },   
+    {
+        "name": "UNITCOST_CC",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "SMS_ORDER_NUMBER",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "PROMISED",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "SOSTATUS1",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },           
+    {
+        "name": "Textbox34",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },
+    {
+        "name": "QTY_IN_KG1",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },   
+    {
+        "name": "Textbox36",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },       
+    {
+        "name": "DESPATCHED_QTY_IN_KG1",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    }, 
+    {
+        "name": "Textbox39",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },    
+    {
+        "name": "Textbox40",
+        "type": "FLOAT64",
+        "mode": "NULLABLE"     
+    },  
+    {
+        "name": "day_loaded",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    },             
+    {
+        "name": "date_loaded",
+        "type": "STRING",
+        "mode": "NULLABLE"     
+    }    
+]

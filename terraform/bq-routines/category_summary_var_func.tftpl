@@ -1,0 +1,147 @@
+WITH fresh_mo AS(
+  SELECT
+    depot_category,
+    moveorder_short,
+    sum_pkrd_qty,
+    sum_pkrd_value,
+    sum_nfsi_qty,
+    sum_nfsi_value,
+    sum_qty_variance,
+    sum_val_variance,
+    sum_git_qty,
+    sum_git_value
+  FROM `${proj}.mm_fin_reporting.category_mo_var`(start_date, end_date, 'NFSI Fresh')
+),
+non_nfsi_mo AS (
+  SELECT
+    depot_category,
+    moveorder_short,
+    sum_pkrd_qty,
+    sum_pkrd_value,
+    sum_nfsi_qty,
+    sum_nfsi_value,
+    sum_qty_variance,
+    sum_val_variance,
+    sum_git_qty,
+    sum_git_value  
+  FROM `${proj}.mm_fin_reporting.category_mo_var`(start_date, end_date, 'Non-NFSI')
+),
+frozen_var AS (
+  SELECT
+    depot_category,
+    depot_id,
+    depot_name,
+    record_date,
+    sum_pkrd_qty,
+    sum_pkrd_value,
+    sum_nfsi_qty,
+    sum_nfsi_value,
+    sum_qty_variance,
+    sum_val_variance,
+    sum_git_qty,
+    sum_git_value  
+  FROM `${proj}.mm_fin_reporting.category_depot_date_var`(start_date, end_date, 'NFSI Frozen')
+),
+fresh_totals AS (
+  SELECT 
+    fm.depot_category,
+    SUM(fm.sum_pkrd_qty) AS total_pkrd_qty,
+    SUM(fm.sum_pkrd_value) AS total_pkrd_value,
+    SUM(fm.sum_nfsi_qty) AS total_nfsi_qty,
+    SUM(fm.sum_nfsi_value) AS total_nfsi_value,
+    SUM(fm.sum_qty_variance) AS total_qty_variance,
+    SUM(fm.sum_val_variance) AS total_value_variance,
+    SUM(fm.sum_git_qty) AS total_git_qty,
+    SUM(fm.sum_git_value) AS total_git_value
+  FROM fresh_mo fm
+  GROUP BY fm.depot_category
+),
+non_nfsi_totals AS (
+  SELECT 
+    nnm.depot_category,
+    SUM(nnm.sum_pkrd_qty) AS total_pkrd_qty,
+    SUM(nnm.sum_pkrd_value) AS total_pkrd_value,
+    SUM(nnm.sum_nfsi_qty) AS total_nfsi_qty,
+    SUM(nnm.sum_nfsi_value) AS total_nfsi_value,
+    SUM(nnm.sum_qty_variance) AS total_qty_variance,
+    SUM(nnm.sum_val_variance) AS total_value_variance,
+    SUM(nnm.sum_git_qty) AS total_git_qty,
+    SUM(nnm.sum_git_value) AS total_git_value
+  FROM non_nfsi_mo nnm
+  GROUP BY nnm.depot_category  
+),
+frozen_totals AS (
+  SELECT 
+    fv.depot_category,
+    SUM(fv.sum_pkrd_qty) AS total_pkrd_qty,
+    SUM(fv.sum_pkrd_value) AS total_pkrd_value,
+    SUM(fv.sum_nfsi_qty) AS total_nfsi_qty,
+    SUM(fv.sum_nfsi_value) AS total_nfsi_value,
+    SUM(fv.sum_qty_variance) AS total_qty_variance,
+    SUM(fv.sum_val_variance) AS total_value_variance,
+    SUM(fv.sum_git_qty) AS total_git_qty,
+    SUM(fv.sum_git_value) AS total_git_value
+  FROM frozen_var fv
+  GROUP BY fv.depot_category  
+),
+summary_totals AS (
+  SELECT * FROM fresh_totals
+  UNION ALL
+  SELECT * FROM non_nfsi_totals
+  UNION ALL
+  SELECT * FROM frozen_totals
+),
+category_summary_totals AS (
+    SELECT 
+        st.depot_category,
+        st.total_pkrd_qty,
+        st.total_pkrd_value,
+        st.total_nfsi_qty,
+        st.total_nfsi_value,
+        st.total_qty_variance,
+        st.total_value_variance,
+        st.total_git_qty,
+        st.total_git_value,
+        (st.total_value_variance / st.total_pkrd_value) * 100 AS pct_sales,
+        st.total_value_variance - st.total_git_value AS ptd_ex_git,
+        ((st.total_value_variance - st.total_git_value) / st.total_pkrd_value) * 100 AS pct_sales_ex_git
+    FROM summary_totals st
+),
+summary_grand_total AS (
+  SELECT
+    'Total' AS depot_category,
+    SUM(cst.total_pkrd_qty) AS total_pkrd_qty,
+    SUM(cst.total_pkrd_value) AS total_pkrd_value,
+    SUM(cst.total_nfsi_qty) AS total_nfsi_qty,
+    SUM(cst.total_nfsi_value) AS total_nfsi_value,
+    SUM(cst.total_qty_variance) AS total_qty_variance,
+    SUM(cst.total_value_variance) AS total_value_variance,
+    SUM(cst.total_git_qty) AS total_git_qty,
+    SUM(cst.total_git_value) AS total_git_value,
+    SUM(cst.ptd_ex_git) AS ptd_ex_git
+  FROM category_summary_totals cst
+  GROUP BY depot_category
+),
+summary_grand_total_pct AS (
+  SELECT
+    sgt.depot_category,
+    sgt.total_pkrd_qty,
+    sgt.total_pkrd_value,
+    sgt.total_nfsi_qty,
+    sgt.total_nfsi_value,
+    sgt.total_qty_variance,
+    sgt.total_value_variance,
+    sgt.total_git_qty,
+    sgt.total_git_value,
+    (sgt.total_value_variance / sgt.total_pkrd_value) * 100 AS pct_sales,
+    sgt.ptd_ex_git,
+    ((sgt.total_value_variance - sgt.total_git_value) / sgt.total_pkrd_value) * 100 AS pct_sales_ex_git
+  FROM summary_grand_total sgt
+),
+combined_totals AS (
+  SELECT * FROM category_summary_totals
+  UNION ALL
+  SELECT * FROM summary_grand_total_pct
+) 
+SELECT * FROM combined_totals
+ORDER BY depot_category ASC

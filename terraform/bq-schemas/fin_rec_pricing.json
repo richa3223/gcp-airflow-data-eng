@@ -1,0 +1,170 @@
+[
+    {
+        "name": "created_ts",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "defaultValueExpression": "CURRENT_TIMESTAMP"
+    },
+    {
+        "name": "correlation_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Common ID for all records created by a specific pipeline run"
+    },   
+    {
+        "name": "record_status",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates active, valid or error status of a record"
+    },             
+    {
+        "name": "pricing_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "Effective date of price data"
+    },
+    {
+        "name": "sku",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Unique ID of individual products"
+    },  
+    {
+        "name": "min",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Master product ID number ???"
+    },  
+    {
+        "name": "pin",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Product ID number ???"
+    },        
+    {
+        "name": "long_desc",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product long description"
+    },          
+    {
+        "name": "room",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product room name"
+    },  
+    {
+        "name": "room_two",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Product room two name"
+    },                                                           
+    {
+        "name": "trading_category",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Product trading category"
+    }, 
+    {
+        "name": "pack_weight",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Pack weight in kilos"
+    },      
+    {
+        "name": "case_size",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Number of product items per case"
+    },     
+    {
+        "name": "case_weight",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Case weight in kilos"
+    },   
+    {
+        "name": "rm",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of raw materials per item"
+    },  
+    {
+        "name": "pack",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of packaging per item"
+    },                        
+    {
+        "name": "lab",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of labour per item"
+    },
+    {
+        "name": "dist",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of distribution per item"
+    },            
+    {
+        "name": "oh",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of overheads per item"
+    },   
+    {
+        "name": "depot_loss",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of depot loss per item"
+    },     
+    {
+        "name": "total",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Total cost per item"
+    },     
+    {
+        "name": "rm_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of raw materials per case"
+    },  
+    {
+        "name": "pack_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of packaging per case"
+    },                        
+    {
+        "name": "lab_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of labour per case"
+    },
+    {
+        "name": "dist_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of distribution per case"
+    },            
+    {
+        "name": "oh_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of overheads per case"
+    },   
+    {
+        "name": "depot_loss_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Cost of depot loss per case"
+    },     
+    {
+        "name": "total_case",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Total cost per case"
+    }
+]

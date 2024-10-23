@@ -1,0 +1,12 @@
+SELECT 
+  frd.record_date,
+  frd.depot_name,
+  SUM(frd.quantity_variance) AS qty_var,
+  SUM(frd.value_variance_tp) AS val_var
+FROM `${proj}.mm_fin_reporting.fin_rec_data_for_dates`(start_date,end_date) frd
+GROUP BY
+  frd.record_date,
+  frd.depot_name
+ORDER BY
+  frd.record_date ASC,
+  frd.depot_name ASC

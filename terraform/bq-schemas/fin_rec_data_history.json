@@ -1,0 +1,158 @@
+[
+    {
+        "name": "created_ts",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "defaultValueExpression": "CURRENT_TIMESTAMP"
+    },
+    {
+        "name": "correlation_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Common ID for all records created by a specific pipeline run"
+    },   
+    {
+        "name": "record_status",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates active, valid or error status of a record"
+    },     
+    {
+        "name": "valid_from",
+        "type": "TIMESTAMP",
+        "mode": "REQUIRED",
+        "description": "Indicates the validity and freshness of the record. Supports time bounded queries on latest data"        
+    },    
+    {
+        "name": "record_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "Real world date for each record"
+    },  
+    {
+        "name": "source_data_type",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates source type e.g. PKRD, Fresh, Frozen, Non-NFSI"
+    },   
+    {
+        "name": "sku",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Unique ID of individual products"
+    },  
+    {
+        "name": "moveorder_short",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "First eight characters of move order"
+    },  
+    {
+        "name": "lot_number",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "PKRD only lot number to differentiate records with same date, SKU, MO, depot, quantity"
+    },       
+    {
+        "name": "depot_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Unique alphanumeric depot ID"
+    },                                                        
+    {
+        "name": "depot_name",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Long name of depot"
+    }, 
+    {
+        "name": "depot_category",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Depot product type e.g. Fresh, Frozen, Non-NFSI"
+    }, 
+    {
+        "name": "sku_moveorder",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Compound key of SKU and move order"
+    },             
+    {
+        "name": "order_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Unique sales order ID"
+    }, 
+    {
+        "name": "sku_and_order",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Compound key of SKU and sales order ID"
+    },             
+    {
+        "name": "pkrd_unit_price",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Unit price for product"
+    }, 
+    {
+        "name": "pkrd_case_price",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Case price for product"
+    },  
+    {
+        "name": "pkrd_quantity",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Quantity of product dispatched"
+    },      
+    {
+        "name": "pkrd_value",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Value of product dispatched"
+    },                               
+    {
+        "name": "pkrd_value_tp",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Transfer pricing generated value of product dispatched"
+    }, 
+    {
+        "name": "nfsi_quantity",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Quantity of product received"
+    }, 
+    {
+        "name": "nfsi_value",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Value of product received"
+    },  
+    {
+        "name": "quantity_variance",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Variance between quantity dispatched and received"
+    },   
+    {
+        "name": "value_variance",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Variance between value dispatched and received"
+    },                        
+    {
+        "name": "value_variance_tp",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Variance between transfer pricing value dispatched and received"
+    },
+    {
+        "name": "fingerprint",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Hash of composite row key values to support de-duplication in historical queries"
+    }             
+]

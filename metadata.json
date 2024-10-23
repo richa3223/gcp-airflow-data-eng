@@ -1,0 +1,19 @@
+{
+    "name": "test-template-name",
+    "description": "Sample Flex Template parameter configuration",
+    "parameters": [
+      {
+        "name": "bulk",
+        "label": "Bulk run flag",
+        "helpText": "Flag indicating whether to run bulk job",
+        "defaultValue": "false",
+        "isOptional": true        
+      },
+      {
+        "name": "str-date",
+        "label": "Sample required string parameter",
+        "helpText": "Sample string date parameter in 'yyyy-mm-dd format",
+        "isOptional": false
+      }
+    ]
+  }

@@ -1,0 +1,128 @@
+[
+    {
+        "name": "created_ts",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "defaultValueExpression": "CURRENT_TIMESTAMP"
+    },
+    {
+        "name": "correlation_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Common ID for all records created by a specific pipeline run"
+    },   
+    {
+        "name": "record_status",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Indicates active, valid or error status of a record"
+    },     
+    {
+        "name": "effective_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "Effective date of variance data"
+    },    
+    {
+        "name": "variance_type",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Name of variance report type"
+    },   
+    {
+        "name": "source_data_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Indicates source type e.g. PKRD, Fresh, Frozen, Non-NFSI"
+    },   
+    {
+        "name": "record_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Real world date for each record"
+    },          
+    {
+        "name": "depot_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Unique alphanumeric depot ID"
+    },                                                        
+    {
+        "name": "depot_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Long name of depot"
+    }, 
+    {
+        "name": "depot_category",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Depot product type e.g. Fresh, Frozen, Non-NFSI"
+    },
+    {
+        "name": "total_pkrd_quantity",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Quantity of product dispatched"
+    },      
+    {
+        "name": "total_pkrd_value_tp",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Transfer pricing generated value of product dispatched"
+    },     
+    {
+        "name": "total_nfsi_quantity",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Quantity of product received"
+    }, 
+    {
+        "name": "total_nfsi_value",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Value of product received"
+    },  
+    {
+        "name": "total_quantity_variance",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Variance between quantity dispatched and received"
+    },                        
+    {
+        "name": "total_value_variance_tp",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Variance between transfer pricing value dispatched and received"
+    },
+    {
+        "name": "moveorder_short",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "First eight characters of move order"
+    },             
+    {
+        "name": "sku",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Unique ID of individual products"
+    },   
+    {
+        "name": "is_git",
+        "type": "BOOL",
+        "mode": "REQUIRED",
+        "description": "Flag indicating if record is goods in transit"
+    },    
+    {
+        "name": "git_quantity",
+        "type": "INT64",
+        "mode": "REQUIRED",
+        "description": "Goods in transit quantity"
+    },                        
+    {
+        "name": "git_value",
+        "type": "FLOAT64",
+        "mode": "REQUIRED",
+        "description": "Goods in transit value"
+    }        
+]
